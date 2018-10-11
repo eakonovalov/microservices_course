@@ -8,10 +8,10 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by ekonovalov on 2018-10-04.
+ * Created by ekonovalov on 2018-10-11.
  */
 @Service
-public class UserDaoService {
+public class UserJpaDaoService {
 
     private static final List<User> users = new ArrayList<>();
     private static int counter = 3;
@@ -35,7 +35,7 @@ public class UserDaoService {
         return user;
     }
 
-    public User findOne(Integer id) {
+    public User findById(Integer id) {
         if (id == null) return null;
 
         for (User user : users) {

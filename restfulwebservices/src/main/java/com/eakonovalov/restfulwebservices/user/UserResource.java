@@ -21,7 +21,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class UserResource {
 
     @Autowired
-    private UserDaoService service;
+    private UserRedisDaoService service;
 
     @GetMapping(path = "/users")
     public List<User> retrieveAllUsers() {
@@ -30,7 +30,7 @@ public class UserResource {
 
     @GetMapping(path = "/users/{id}")
     public Resource<User> retrieveUser(@PathVariable Integer id) {
-        User user = service.findOne(id);
+        User user = service.findById(id);
         if (user == null) {
             throw new UserNotFoundException("id = " + id);
         }
@@ -53,10 +53,7 @@ public class UserResource {
 
     @DeleteMapping(path = "/users/{id}")
     public void deleteUser(@PathVariable Integer id) {
-        User user = service.deleteById(id);
-        if (user == null) {
-            throw new UserNotFoundException("id = " + id);
-        }
+        service.deleteById(id);
     }
 
 }
