@@ -19,23 +19,23 @@ public class HelloWorldController {
     @Autowired
     private MessageSource messageSource;
 
-    @GetMapping(path="/hello-world")
+    @GetMapping(path = "/hello-world")
     public String helloWorld() {
         return "Hello world!!!";
     }
 
-    @GetMapping(path="/hello-world-bean")
+    @GetMapping(path = "/hello-world-bean")
     public HelloWorldBean helloWorldBean() {
         return new HelloWorldBean("Hello world!!!");
     }
 
-    @GetMapping(path="/hello-world-variable/{name}")
+    @GetMapping(path = "/hello-world-variable/{name}")
     public HelloWorldBean helloWorldVariable(@PathVariable String name) {
         return new HelloWorldBean("Hello, " + name + "!!!");
     }
 
     @GetMapping(path = "/hello-world-internationalized")
-    public String helloWorldInternationalized(@RequestHeader(name="Accept-Language", required = false) Locale locale) {
+    public String helloWorldInternationalized(@RequestHeader(name = "Accept-Language", required = false) Locale locale) {
         return messageSource.getMessage("good.morning.message", null, LocaleContextHolder.getLocale());
     }
 

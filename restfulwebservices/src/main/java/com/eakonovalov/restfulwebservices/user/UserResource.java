@@ -11,7 +11,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * Created by ekonovalov on 2018-10-04.
@@ -30,7 +31,7 @@ public class UserResource {
     @GetMapping(path = "/users/{id}")
     public Resource<User> retrieveUser(@PathVariable Integer id) {
         User user = service.findOne(id);
-        if(user == null) {
+        if (user == null) {
             throw new UserNotFoundException("id = " + id);
         }
 
@@ -41,7 +42,7 @@ public class UserResource {
         return resource;
     }
 
-    @PostMapping(path= "/users")
+    @PostMapping(path = "/users")
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         User newUser = service.create(user);
 
@@ -53,7 +54,7 @@ public class UserResource {
     @DeleteMapping(path = "/users/{id}")
     public void deleteUser(@PathVariable Integer id) {
         User user = service.deleteById(id);
-        if(user == null) {
+        if (user == null) {
             throw new UserNotFoundException("id = " + id);
         }
     }

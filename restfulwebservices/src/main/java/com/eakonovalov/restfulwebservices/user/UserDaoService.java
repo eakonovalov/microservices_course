@@ -27,7 +27,7 @@ public class UserDaoService {
     }
 
     public User create(User user) {
-        if(user.getId() == null) {
+        if (user.getId() == null) {
             user.setId(++counter);
         }
         users.add(user);
@@ -36,10 +36,10 @@ public class UserDaoService {
     }
 
     public User findOne(Integer id) {
-        if(id == null) return null;
+        if (id == null) return null;
 
-        for(User user : users) {
-            if(user.getId().equals(id)) {
+        for (User user : users) {
+            if (user.getId().equals(id)) {
                 return user;
             }
         }
@@ -48,12 +48,12 @@ public class UserDaoService {
     }
 
     public User deleteById(Integer id) {
-        if(id == null) return null;
+        if (id == null) return null;
 
         Iterator<User> itr = users.iterator();
         while (itr.hasNext()) {
             User user = itr.next();
-            if(user.getId().equals(id)) {
+            if (user.getId().equals(id)) {
                 itr.remove();
                 return user;
             }
