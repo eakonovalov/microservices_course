@@ -1,8 +1,9 @@
 package com.eakonovalov.restfulwebservices;
 
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -18,9 +19,10 @@ public class RedisConfig {
 
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() {
+        RedisProperties properties = redisProperties();
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-        configuration.setHostName("192.168.99.100");
-        configuration.setPort(6379);
+        configuration.setHostName(properties.getHost());
+        configuration.setPort(properties.getPort());
 
         return new JedisConnectionFactory(configuration);
     }
@@ -31,6 +33,12 @@ public class RedisConfig {
         template.setConnectionFactory(jedisConnectionFactory());
         template.setValueSerializer(new GenericToStringSerializer<>(Object.class));
         return template;
+    }
+
+    @Bean
+    @Primary
+    public RedisProperties redisProperties() {
+        return new RedisProperties();
     }
 
 }
