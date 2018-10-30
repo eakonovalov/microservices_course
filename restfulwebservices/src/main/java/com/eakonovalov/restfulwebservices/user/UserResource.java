@@ -1,6 +1,7 @@
 package com.eakonovalov.restfulwebservices.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class UserResource {
 
     @Autowired
-    private UserRedisDaoService service;
+    @Qualifier("redis")
+    private UserDaoService service;
 
     @GetMapping(path = "/users")
     public List<User> retrieveAllUsers() {

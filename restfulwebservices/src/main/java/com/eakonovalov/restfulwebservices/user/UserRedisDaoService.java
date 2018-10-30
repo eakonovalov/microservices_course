@@ -10,8 +10,8 @@ import java.util.Optional;
 /**
  * Created by ekonovalov on 2018-10-11.
  */
-@Service
-public class UserRedisDaoService {
+@Service("redis")
+public class UserRedisDaoService implements UserDaoService {
 
     @Autowired
     private UserRepository userRepository;

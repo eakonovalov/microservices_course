@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * Created by ekonovalov on 2018-10-11.
  */
-@Service
-public class UserJpaDaoService {
+@Service("jpa")
+public class UserJpaDaoService implements UserDaoService {
 
     private static final List<User> users = new ArrayList<>();
     private static int counter = 3;
@@ -47,19 +47,16 @@ public class UserJpaDaoService {
         return null;
     }
 
-    public User deleteById(Integer id) {
-        if (id == null) return null;
+    public void deleteById(Integer id) {
+        if (id == null) return;
 
         Iterator<User> itr = users.iterator();
         while (itr.hasNext()) {
             User user = itr.next();
             if (user.getId().equals(id)) {
                 itr.remove();
-                return user;
             }
         }
-
-        return null;
     }
 
 }
