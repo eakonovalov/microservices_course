@@ -22,7 +22,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class UserResource {
 
     @Autowired
-    @Qualifier("repository")
     private UserDaoService service;
 
     @GetMapping(path = "/users")
@@ -33,9 +32,6 @@ public class UserResource {
     @GetMapping(path = "/users/{id}")
     public Resource<User> retrieveUser(@PathVariable Integer id) {
         User user = service.findById(id);
-        if (user == null) {
-            throw new UserNotFoundException("id = " + id);
-        }
 
         Resource<User> resource = new Resource<>(user);
         ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllUsers());
@@ -56,6 +52,20 @@ public class UserResource {
     @DeleteMapping(path = "/users/{id}")
     public void deleteUser(@PathVariable Integer id) {
         service.deleteById(id);
+    }
+
+    @GetMapping(path = "/users/{id}/posts")
+    public List<Post> retrieveAllPosts(@PathVariable Integer id) {
+        return service.getPosts(id);
+    }
+
+    @PostMapping(path = "/users/{id}/posts")
+    public ResponseEntity<User> createPost(@PathVariable Integer id, @RequestBody Post post) {
+        Post newPost = service.createPost(id, post);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newPost.getId()).toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
 }

@@ -8,11 +8,14 @@ import java.util.*;
 /**
  * Created by ekonovalov on 2018-10-11.
  */
-@Service("repository")
-public class UserRepositoryDaoService implements UserDaoService {
+@Service
+public class UserDaoServiceImpl implements UserDaoService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
@@ -27,15 +30,34 @@ public class UserRepositoryDaoService implements UserDaoService {
 
     public User findById(Integer id) {
         Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()) {
-            return user.get();
+        if(!user.isPresent()) {
+            throw new UserNotFoundException("id = " + id);
         }
 
-        return null;
+        return user.get();
     }
 
     public void deleteById(Integer id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Post> getPosts(Integer id) {
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()) {
+            return user.get().getPosts();
+        }
+        else {
+            throw new UserNotFoundException("id = " + id);
+        }
+    }
+
+    public Post createPost(Integer id, Post post) {
+        User user = findById(id);
+        post.setUser(user);
+        postRepository.save(post);
+
+        return post;
     }
 
 }

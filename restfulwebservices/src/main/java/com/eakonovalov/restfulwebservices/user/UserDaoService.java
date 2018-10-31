@@ -12,4 +12,8 @@ public interface UserDaoService {
 
     void deleteById(Integer id);
 
+    List<Post> getPosts(Integer id);
+
+    Post createPost(Integer id, Post post);
+
 }
