@@ -22,7 +22,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class UserResource {
 
     @Autowired
-    @Qualifier("redis")
+    @Qualifier("repository")
     private UserDaoService service;
 
     @GetMapping(path = "/users")

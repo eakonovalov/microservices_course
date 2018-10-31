@@ -3,15 +3,13 @@ package com.eakonovalov.restfulwebservices.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by ekonovalov on 2018-10-11.
  */
-@Service("redis")
-public class UserRedisDaoService implements UserDaoService {
+@Service("repository")
+public class UserRepositoryDaoService implements UserDaoService {
 
     @Autowired
     private UserRepository userRepository;
@@ -30,7 +28,7 @@ public class UserRedisDaoService implements UserDaoService {
     public User findById(Integer id) {
         Optional<User> user = userRepository.findById(id);
         if(user.isPresent()) {
-            return userRepository.findById(id).get();
+            return user.get();
         }
 
         return null;

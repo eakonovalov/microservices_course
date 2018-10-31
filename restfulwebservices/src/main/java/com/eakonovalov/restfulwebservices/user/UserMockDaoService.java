@@ -8,10 +8,10 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by ekonovalov on 2018-10-11.
+ * Created by ekonovalov on 2018-10-31.
  */
-@Service("jpa")
-public class UserJpaDaoService implements UserDaoService {
+@Service("mock")
+public class UserMockDaoService implements UserDaoService {
 
     private static final List<User> users = new ArrayList<>();
     private static int counter = 3;
@@ -55,6 +55,7 @@ public class UserJpaDaoService implements UserDaoService {
             User user = itr.next();
             if (user.getId().equals(id)) {
                 itr.remove();
+                return;
             }
         }
     }

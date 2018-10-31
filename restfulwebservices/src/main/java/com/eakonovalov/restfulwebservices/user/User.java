@@ -2,8 +2,11 @@ package com.eakonovalov.restfulwebservices.user;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.data.redis.core.RedisHash;
+//import org.springframework.data.redis.core.RedisHash;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -13,11 +16,14 @@ import java.util.Date;
  * Created by ekonovalov on 2018-10-04.
  */
 @ApiModel(description = "All details about the user.")
-@RedisHash("User")
+//@RedisHash("User")
+@Entity
 public class User implements Serializable {
 
     private static final long serialVersionUID = -8653484505410500730L;
 
+    @Id
+    @GeneratedValue
     private Integer id;
 
     @Size(min = 2, message = "Name should have atleast 2 characters")
